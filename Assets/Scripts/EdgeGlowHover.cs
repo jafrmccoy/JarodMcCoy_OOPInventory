@@ -12,6 +12,8 @@ public class EdgeGlowHover : MonoBehaviour
     private Collider _collider;
     private bool _isHovering;
 
+    private Coroutine _glowCoroutine;
+
     private void Start()
     {
         _mainCamera = Camera.main;
@@ -44,6 +46,11 @@ public class EdgeGlowHover : MonoBehaviour
             if (!_isHovering)
             {
                 _isHovering = true;
+
+                if (_glowCoroutine != null)
+                {
+                    StopCoroutine(_glowCoroutine);
+                }
             }
 
             OnHoverStay();
@@ -60,8 +67,6 @@ public class EdgeGlowHover : MonoBehaviour
 
     private void OnHoverStay()
     {
-        StopCoroutine(StopGlow());
-
         if (_outline.OutlineWidth < _outlineWidth)
         {
             _outline.OutlineWidth += _outlineGrowthSpeed * Time.deltaTime;
@@ -70,7 +75,12 @@ public class EdgeGlowHover : MonoBehaviour
 
     private void OnHoverExit()
     {
-        StartCoroutine(StopGlow());
+        if (_glowCoroutine != null)
+        {
+            StopCoroutine(_glowCoroutine);
+        }
+
+        _glowCoroutine = StartCoroutine(StopGlow());
     }
 
     private IEnumerator StopGlow()

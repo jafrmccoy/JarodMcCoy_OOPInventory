@@ -4,11 +4,12 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     [SerializeField] private Dictionary<Item, int> _inventory = new Dictionary<Item, int>();
+    public Dictionary<Item, int> Inventory { get { return _inventory; } }
 
     [SerializeField] private int _inventorySize = 20;
 
     public static InventoryManager Instance;
-    private void Start()
+    private void Awake()
     {
         if (Instance != null)
         {
