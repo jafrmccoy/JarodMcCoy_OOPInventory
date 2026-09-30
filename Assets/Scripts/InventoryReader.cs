@@ -11,12 +11,17 @@ public class InventoryReader : MonoBehaviour
 
     private Dictionary<Item, int> _inventory;
 
+    private List<GameObject> _createdSlots = new List<GameObject>();
+
     private void OnEnable()
     {
         _inventory = InventoryManager.Instance.Inventory;
         PopulateInventoryPanel();
     }
 
+    /// <summary>
+    /// Creates copies of the prefab for each item in inventory.
+    /// </summary>
     private void PopulateInventoryPanel()
     {
         List<Item> rawInventory = new List<Item>();
@@ -31,6 +36,7 @@ public class InventoryReader : MonoBehaviour
                 }
             }
         }
+
 
         Vector3 placementPosition = _topRightItemPosition;
 

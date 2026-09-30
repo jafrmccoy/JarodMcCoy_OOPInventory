@@ -11,7 +11,7 @@ public class Weapon : Item
     
     public override void PickupItem()
     {
-        Debug.Log("You tried to grab the weapon, " + Name + "!");
+        Debug.Log("You tried to grab the weapon, " + Name + ", which is a " + _weaponType + ".");
 
         if (InventoryManager.Instance.AddItemToInventory(this))
         {

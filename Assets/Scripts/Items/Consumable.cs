@@ -2,14 +2,36 @@ using UnityEngine;
 
 public class Consumable : Item
 {
+    [SerializeField] private int _uses;
+
     public override void UseItem()
     {
         Debug.Log("You tried to use the consumable, " + Name + "!");
+        if (_uses > 0)
+        {
+            _uses--;
+            Debug.Log(_uses + " uses remaining.");
+        }
+        else
+        {
+            InventoryManager.Instance.RemoveItemFromIventory(this);
+        }
+        
     }
 
     public override void PickupItem()
     {
         Debug.Log("You tried to grab the consumable, " + Name + "!");
+
+        if (InventoryManager.Instance.AddItemToInventory(this))
+        {
+            Debug.Log("Success!");
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            Debug.Log("Failure!");
+        }
     }
 
     public override void LookItem()
